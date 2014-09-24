@@ -42,7 +42,7 @@ public class DBConnector {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "Change to your password";
+	private final String password = "Pitsnip1";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";

@@ -28,6 +28,12 @@ public class displayGui extends JFrame{
         btnPanel = new JPanel();
         listPanel = new JPanel(); 
         
+        btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Recipe Name"));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Description"));
+        
         String[] addOptions = {"Tsting", "One", "Two"};
         String[] Recipes = {"Get this from", "MySQL Database", "Need commands"};
         String[] Descriptions = {"Get this from", "MySQL Database", "Need commands"};
@@ -40,12 +46,12 @@ public class displayGui extends JFrame{
 		listPanel.add(listLbl); 
 		listPanel.add(options);  
 		
-        btnPanel.setPreferredSize(new Dimension(300,40));
+        //btnPanel.setPreferredSize(new Dimension(300,40));
         leftPanel.setLayout(new BorderLayout());
         rightPanel.setLayout(new BorderLayout() );
         
         add(leftPanel, BorderLayout.WEST);
-        add(rightPanel, BorderLayout.EAST);
+        add(rightPanel, BorderLayout.CENTER);
         
       //4. Size the frame.
         frame2.pack();
@@ -59,8 +65,8 @@ public class displayGui extends JFrame{
         //rightPanel.add(scrollPane,BorderLayout.CENTER);
         rightPanel.add(Description_List, BorderLayout.CENTER);
         
-        JButton addButton = new JButton("ADD");
-        JButton delButton = new JButton("DELETE");
+        JButton addButton = new JButton("+");
+        JButton delButton = new JButton("-");
         JButton saveButton = new JButton("SAVE");
 
         addButton.addActionListener(new ActionListener() { 
