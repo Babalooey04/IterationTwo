@@ -27,6 +27,8 @@ public class displayGui extends JFrame{
         rightPanel = new JPanel();
         btnPanel = new JPanel();
         listPanel = new JPanel(); 
+        JTextField field = new JTextField(20);
+        frame2.add(field, BorderLayout.NORTH);
         
         btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -38,7 +40,17 @@ public class displayGui extends JFrame{
         String[] Recipes = {"Get this from", "MySQL Database", "Need commands"};
         String[] Descriptions = {"Get this from", "MySQL Database", "Need commands"};
         
+        //Buttons
+        JButton addButton = new JButton("+");
+        JButton delButton = new JButton("-");
+        JButton saveButton = new JButton("SAVE");
+        
+        // Labels
 		JLabel listLbl = new JLabel("Add"); 
+		JLabel recipe_name = new JLabel("Recipe name: ");
+		JLabel recipe_ingredients = new JLabel("Ingredients: ");
+		JLabel recipe_directions = new JLabel("Directions: ");
+		
 		JList options = new JList(addOptions); 
 		JList Recipes_List = new JList(Recipes);
 		JList Description_List = new JList(Descriptions);
@@ -65,9 +77,7 @@ public class displayGui extends JFrame{
         //rightPanel.add(scrollPane,BorderLayout.CENTER);
         rightPanel.add(Description_List, BorderLayout.CENTER);
         
-        JButton addButton = new JButton("+");
-        JButton delButton = new JButton("-");
-        JButton saveButton = new JButton("SAVE");
+     
 
         addButton.addActionListener(new ActionListener() { 
 			@Override public void actionPerformed(ActionEvent event) { 
@@ -80,7 +90,12 @@ public class displayGui extends JFrame{
         
         btnPanel.add(addButton);
         btnPanel.add(delButton);
-        btnPanel.add(saveButton);
+        
+        //frame2 adds
+        frame2.add(recipe_name, BorderLayout.WEST);
+        frame2.add(recipe_ingredients, BorderLayout.WEST);
+        frame2.add(recipe_directions, BorderLayout.WEST);
+        frame2.add(saveButton, BorderLayout.SOUTH);
         
         
     }

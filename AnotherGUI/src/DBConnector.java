@@ -42,7 +42,7 @@ public class DBConnector {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "Pitsnip1";
+	private final String password = "test";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -54,7 +54,7 @@ public class DBConnector {
 	private final String dbName = "Recipe";
 	
 	/** The name of the table we are testing with */
-	private final String tableName = "JDBC_TEST";
+	private final String tableName = "recipes_tbl";
 	
 	/**
 	 * Get a new database connection
@@ -97,6 +97,58 @@ public class DBConnector {
 	/**
 	 * Connect to MySQL and do some stuff.
 	 */
+	public void insert_IntoDB(String name, String ingredients, String directions){
+
+		// Connect to MySQL
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return;
+		}
+		// Insert into table
+				try {
+				    String createString =
+					        "INSERT INTO recipes_tbl(recipes_name, recipes_ingredient, recipes_directions)" + 
+				    " VALUES('" + name + "', '" + ingredients + "', '" + directions + "')";
+					this.executeUpdate(conn, createString);
+					System.out.println("Inserted new recipe!");
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Failed to insert the recipe");
+					e.printStackTrace();
+					return;
+				}
+		
+	}
+	
+	public void delete_FromDB(){
+
+		// Connect to MySQL
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return;
+		}
+		// Insert into table
+				try {
+				    String createString =
+					        "DELETE FROM recipes_tbl WHERE id=4";
+					this.executeUpdate(conn, createString);
+					System.out.println("Deleted that old recipe!");
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Failed to delete the recipe");
+					e.printStackTrace();
+					return;
+				}
+		
+	}
 	public void run() {
 
 		// Connect to MySQL

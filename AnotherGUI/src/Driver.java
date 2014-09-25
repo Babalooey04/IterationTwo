@@ -14,7 +14,10 @@ public class Driver {
 		dg.setVisible(true);
 		
 		DBConnector app = new DBConnector();
-		app.run();
+		//app.run();
+		
+		//app.insert_IntoDB("Test1", "1/2 Tsp Salt, 2 LBS beef", "Cook it yo!");
+		//app.delete_FromDB();
 	}
 
 }
