@@ -12,6 +12,9 @@ public class displayGui extends JFrame{
 
     public displayGui(JTable tbl){
     	
+    	// Need a Database object
+    	DBConnector app = new DBConnector();
+    	
         setTitle("My Recipes");
         setSize(600,600);
         setBackground(Color.gray);
@@ -37,8 +40,16 @@ public class displayGui extends JFrame{
         rightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Description"));
         
         String[] addOptions = {"Tsting", "One", "Two"};
-        String[] Recipes = {"Get this from", "MySQL Database", "Need commands"};
+    
         String[] Descriptions = {"Get this from", "MySQL Database", "Need commands"};
+        
+        // Some logic
+        Object[] dbRecipes = {app.get_DBinfo()};
+    	String[] Recipes = new String[100];
+    	
+        for (int i = 0; i < dbRecipes.length; i ++){
+        	Recipes = dbRecipes[i];
+        }
         
         //Buttons
         JButton addButton = new JButton("+");

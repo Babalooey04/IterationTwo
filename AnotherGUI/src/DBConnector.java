@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -55,6 +56,9 @@ public class DBConnector {
 	
 	/** The name of the table we are testing with */
 	private final String tableName = "recipes_tbl";
+	
+	int MAX = 100;
+	Object[] result_return = new Object[MAX];
 	
 	/**
 	 * Get a new database connection
@@ -122,6 +126,54 @@ public class DBConnector {
 					return;
 				}
 		
+	}
+	public Object get_DBinfo(){
+		
+		// Instance variables
+
+		int i = 0;
+		
+		// Connect to MySQL
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+		String[] internalArray = new String[MAX];
+
+		
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return null;
+		}
+		// Query the recipes_tbl. Need to abstract this to also querry tags and other tables.
+				try {
+					stmt = conn.createStatement();
+					resultSet = stmt.executeQuery("SELECT * FROM recipes_tbl");
+					while(resultSet.next()){
+						internalArray = new String[MAX];
+						String id = resultSet.getString("id");
+						internalArray[0] = id;
+						String recipe_name = resultSet.getString("recipes_name");
+						internalArray[1] = recipe_name;
+						String recipe_ingredients = resultSet.getString("recipes_ingredient");
+						internalArray[2] = recipe_ingredients;
+						String recipe_directions = resultSet.getString("recipes_directions");
+						internalArray[3] = recipe_directions;
+						System.out.println("ID: " + id + ", Recipe: " + recipe_name + ", Ingredients: " 
+							+ recipe_ingredients + ", Directions: " + recipe_directions);
+						result_return[i] = internalArray;
+						i ++;
+					}
+				
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Failed to querry the recipes_tbl");
+					e.printStackTrace();
+					return null;
+				}
+				return result_return;
 	}
 	
 	public void delete_FromDB(){
@@ -192,8 +244,4 @@ public class DBConnector {
 			return;
 		}
 	}
-	
-	/**
-	 * Connect to the DB and do some stuff
-	 */
 }
