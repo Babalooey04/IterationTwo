@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -10,7 +11,8 @@ public class displayGui extends JFrame{
     private JScrollPane scrollPane;
     final JPanel listPanel;
 
-    public displayGui(JTable tbl){
+    @SuppressWarnings("unchecked")
+	public displayGui(JTable tbl){
     	
     	// Need a Database object
     	DBConnector app = new DBConnector();
@@ -36,19 +38,26 @@ public class displayGui extends JFrame{
         btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         leftPanel.setBorder(BorderFactory.createTitledBorder("Recipe Name"));
+        leftPanel.setPreferredSize(new Dimension(200,300));
+        leftPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         rightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Description"));
+        rightPanel.setBackground(Color.WHITE);
         
         String[] addOptions = {"Tsting", "One", "Two"};
     
-        String[] Descriptions = {"Get this from", "MySQL Database", "Need commands"};
+        // Some logic :This needs to be put into its own class
+        String[] dbRecipes = app.get_DBinfo();  
+        String recipe_dbName = null;
+        String[] output_recipe = new String[100];
+        String[] output_description = new String[100];
         
-        // Some logic
-        Object[] dbRecipes = {app.get_DBinfo()};
-    	String[] Recipes = new String[100];
-    	
-        for (int i = 0; i < dbRecipes.length; i ++){
-        	Recipes = dbRecipes[i];
+        int j = 0;
+        
+        for (int i = 1; i<dbRecipes.length; i = i +3){
+        	
+           	output_recipe[j++] = dbRecipes[i++];
+        	output_description[j++] = dbRecipes[i++];
         }
         
         //Buttons
@@ -63,8 +72,8 @@ public class displayGui extends JFrame{
 		JLabel recipe_directions = new JLabel("Directions: ");
 		
 		JList options = new JList(addOptions); 
-		JList Recipes_List = new JList(Recipes);
-		JList Description_List = new JList(Descriptions);
+		JList Recipes_List = new JList(output_recipe);
+		JList Description_List = new JList(output_description);
 		
 		listPanel.add(listLbl); 
 		listPanel.add(options);  
@@ -82,7 +91,7 @@ public class displayGui extends JFrame{
         frame2.setVisible(false);
         
         leftPanel.add(btnPanel, BorderLayout.SOUTH);
-        leftPanel.add(Recipes_List, BorderLayout.CENTER);
+        leftPanel.add(Recipes_List, BorderLayout.WEST);
         scrollPane = new JScrollPane(tbl);
         //leftPanel.add(scrollPane,BorderLayout.CENTER);
         //rightPanel.add(scrollPane,BorderLayout.CENTER);

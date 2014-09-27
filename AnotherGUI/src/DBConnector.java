@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -43,7 +44,7 @@ public class DBConnector {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "test";
+	private final String password = "Pitsnip1";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -58,7 +59,7 @@ public class DBConnector {
 	private final String tableName = "recipes_tbl";
 	
 	int MAX = 100;
-	Object[] result_return = new Object[MAX];
+	ArrayList<String[]> result_return = new ArrayList<String[]>();
 	
 	/**
 	 * Get a new database connection
@@ -127,7 +128,7 @@ public class DBConnector {
 				}
 		
 	}
-	public Object get_DBinfo(){
+	public String[] get_DBinfo(){
 		
 		// Instance variables
 
@@ -153,18 +154,18 @@ public class DBConnector {
 					stmt = conn.createStatement();
 					resultSet = stmt.executeQuery("SELECT * FROM recipes_tbl");
 					while(resultSet.next()){
-						internalArray = new String[MAX];
 						String id = resultSet.getString("id");
-						internalArray[0] = id;
+						internalArray[i++] = id;
 						String recipe_name = resultSet.getString("recipes_name");
-						internalArray[1] = recipe_name;
+						internalArray[i++] = recipe_name;
 						String recipe_ingredients = resultSet.getString("recipes_ingredient");
-						internalArray[2] = recipe_ingredients;
+						internalArray[i++] = recipe_ingredients;
 						String recipe_directions = resultSet.getString("recipes_directions");
-						internalArray[3] = recipe_directions;
+						internalArray[i++] = recipe_directions;
+					
 						System.out.println("ID: " + id + ", Recipe: " + recipe_name + ", Ingredients: " 
 							+ recipe_ingredients + ", Directions: " + recipe_directions);
-						result_return[i] = internalArray;
+						result_return.add(internalArray);
 						i ++;
 					}
 				
@@ -173,7 +174,7 @@ public class DBConnector {
 					e.printStackTrace();
 					return null;
 				}
-				return result_return;
+				return internalArray;
 	}
 	
 	public void delete_FromDB(){
