@@ -7,6 +7,8 @@ import javax.swing.*;
 public class displayGui extends JFrame{
     private JPanel leftPanel;
     private JPanel rightPanel;
+    private JPanel bottomrightPanel;
+    private JPanel toprightPanel;
     private JPanel btnPanel;
     private JScrollPane scrollPane;
     final JPanel listPanel;
@@ -15,7 +17,8 @@ public class displayGui extends JFrame{
 	public displayGui(JTable tbl){
     	
     	// Need a Database object
-    	DBConnector app = new DBConnector();
+    	DBConnector dbObject = new DBConnector();
+    	dbObject.get_DBinfo();
     	
         setTitle("My Recipes");
         setSize(600,600);
@@ -25,11 +28,10 @@ public class displayGui extends JFrame{
         final JFrame frame2 = new JFrame("Add Recipe");
         frame2.setPreferredSize(new Dimension(300, 300));
         
-      //2. Optional: What happens when the frame closes?
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
         leftPanel = new JPanel();
         rightPanel = new JPanel();
+        bottomrightPanel = new JPanel();
+        toprightPanel = new JPanel();
         btnPanel = new JPanel();
         listPanel = new JPanel(); 
         JTextField field = new JTextField(20);
@@ -40,25 +42,22 @@ public class displayGui extends JFrame{
         leftPanel.setBorder(BorderFactory.createTitledBorder("Recipe Name"));
         leftPanel.setPreferredSize(new Dimension(200,300));
         leftPanel.setBackground(Color.WHITE);
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        rightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Description"));
+        leftPanel.setLayout(new BorderLayout());
+        rightPanel.setLayout(new BorderLayout() );
+        //rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 170, 0));
+        toprightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 300, 200));
+        toprightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Description"));
+        toprightPanel.setBackground(Color.WHITE);
+        bottomrightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 200, 200));
+        bottomrightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Ingredients"));
+        bottomrightPanel.setBackground(Color.WHITE);
+        bottomrightPanel.setPreferredSize(new Dimension(0,200));
+        rightPanel.add(bottomrightPanel, BorderLayout.SOUTH);
+        rightPanel.add(toprightPanel, BorderLayout.NORTH);
+
         rightPanel.setBackground(Color.WHITE);
         
         String[] addOptions = {"Tsting", "One", "Two"};
-    
-        // Some logic :This needs to be put into its own class
-        String[] dbRecipes = app.get_DBinfo();  
-        String recipe_dbName = null;
-        String[] output_recipe = new String[100];
-        String[] output_description = new String[100];
-        
-        int j = 0;
-        
-        for (int i = 1; i<dbRecipes.length; i = i +3){
-        	
-           	output_recipe[j++] = dbRecipes[i++];
-        	output_description[j++] = dbRecipes[i++];
-        }
         
         //Buttons
         JButton addButton = new JButton("+");
@@ -72,20 +71,23 @@ public class displayGui extends JFrame{
 		JLabel recipe_directions = new JLabel("Directions: ");
 		
 		JList options = new JList(addOptions); 
-		JList Recipes_List = new JList(output_recipe);
-		JList Description_List = new JList(output_description);
+		JList Recipes_List = new JList(dbObject.getOutput_recipe());
+		JList Description_List = new JList(dbObject.getOutput_description());
+		JList ingredients_List = new JList(dbObject.getOutput_ingredients());
+		
+		for (String ingredient : dbObject.getOutput_ingredients())
+			System.out.println(ingredient);
 		
 		listPanel.add(listLbl); 
 		listPanel.add(options);  
 		
         //btnPanel.setPreferredSize(new Dimension(300,40));
-        leftPanel.setLayout(new BorderLayout());
-        rightPanel.setLayout(new BorderLayout() );
+      
         
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
         
-      //4. Size the frame.
+        //4. Size the frame.
         frame2.pack();
         frame2.add(listPanel, BorderLayout.CENTER);
         frame2.setVisible(false);
@@ -95,8 +97,8 @@ public class displayGui extends JFrame{
         scrollPane = new JScrollPane(tbl);
         //leftPanel.add(scrollPane,BorderLayout.CENTER);
         //rightPanel.add(scrollPane,BorderLayout.CENTER);
-        rightPanel.add(Description_List, BorderLayout.CENTER);
-        
+        toprightPanel.add(Description_List);
+        bottomrightPanel.add(ingredients_List);
      
 
         addButton.addActionListener(new ActionListener() { 
@@ -106,7 +108,8 @@ public class displayGui extends JFrame{
 				//comboPanel is switched from true to  
 				//value or vice versa. 
 				frame2.setVisible(!frame2.isVisible()); 
-				leftPanel.setVisible(!leftPanel.isVisible());  } });
+				} 
+		});
         
         btnPanel.add(addButton);
         btnPanel.add(delButton);

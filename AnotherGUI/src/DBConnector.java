@@ -58,8 +58,12 @@ public class DBConnector {
 	/** The name of the table we are testing with */
 	private final String tableName = "recipes_tbl";
 	
-	int MAX = 100;
-	ArrayList<String[]> result_return = new ArrayList<String[]>();
+	int MAX = 20;
+
+	String[] internalArray = new String[MAX];
+	private String[] output_recipe = new String[MAX];
+    private String[] output_description = new String[MAX];
+    private String[] output_ingredients = new String[MAX];
 	
 	/**
 	 * Get a new database connection
@@ -128,17 +132,15 @@ public class DBConnector {
 				}
 		
 	}
-	public String[] get_DBinfo(){
+	public void get_DBinfo(){
 		
 		// Instance variables
-
 		int i = 0;
 		
 		// Connect to MySQL
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet resultSet = null;
-		String[] internalArray = new String[MAX];
 
 		
 		try {
@@ -147,36 +149,49 @@ public class DBConnector {
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not connect to the database");
 			e.printStackTrace();
-			return null;
 		}
 		// Query the recipes_tbl. Need to abstract this to also querry tags and other tables.
 				try {
 					stmt = conn.createStatement();
 					resultSet = stmt.executeQuery("SELECT * FROM recipes_tbl");
 					while(resultSet.next()){
-						String id = resultSet.getString("id");
-						internalArray[i++] = id;
-						String recipe_name = resultSet.getString("recipes_name");
-						internalArray[i++] = recipe_name;
-						String recipe_ingredients = resultSet.getString("recipes_ingredient");
-						internalArray[i++] = recipe_ingredients;
-						String recipe_directions = resultSet.getString("recipes_directions");
-						internalArray[i++] = recipe_directions;
-					
-						System.out.println("ID: " + id + ", Recipe: " + recipe_name + ", Ingredients: " 
-							+ recipe_ingredients + ", Directions: " + recipe_directions);
-						result_return.add(internalArray);
+						internalArray[i++] = resultSet.getString("id");
+						internalArray[i++] = resultSet.getString("recipes_name");
+						internalArray[i++] = resultSet.getString("recipes_ingredient");
+						internalArray[i++] = resultSet.getString("recipes_directions");
+			
 						i ++;
 					}
 				
 			    } catch (SQLException e) {
 					System.out.println("ERROR: Failed to querry the recipes_tbl");
 					e.printStackTrace();
-					return null;
+					
 				}
-				return internalArray;
+				Recipes();
 	}
 	
+    public void Recipes(){
+    	
+    	String html1 = "<html><body style='width: ";
+    	String html2 = "px'>";
+    	int j = 0;
+    	int k = 1;
+    	
+        /*for (int i = 1; i<internalArray.length; i = i +3){
+        	
+           	output_recipe[j] = internalArray[i++];
+           	output_ingredients[j] = html1 + "270" + html2 + internalArray[i++];
+           	output_description[j++] = html1 +"300"+ html2 + internalArray[i];
+        }*/
+        while(internalArray[k] != null){
+          	output_recipe[j] = internalArray[k++];
+           	output_ingredients[j] = html1 + "270" + html2 + internalArray[k++];
+           	output_description[j++] = html1 +"300"+ html2 + internalArray[k++];
+           	k+=2;
+        }
+	 }
+    
 	public void delete_FromDB(){
 
 		// Connect to MySQL
@@ -202,47 +217,16 @@ public class DBConnector {
 				}
 		
 	}
-	public void run() {
+	
+	public String[] getOutput_recipe() {
+		return output_recipe;
+	}
 
-		// Connect to MySQL
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return;
-		}
+	public String[] getOutput_description() {
+		return output_description;
+	}
 
-		// Create a table
-		try {
-		    String createString =
-			        "CREATE TABLE " + this.tableName + " ( " +
-			        "ID INTEGER NOT NULL, " +
-			        "NAME varchar(40) NOT NULL, " +
-			        "STREET varchar(40) NOT NULL, " +
-			        "CITY varchar(20) NOT NULL, " +
-			        "STATE char(2) NOT NULL, " +
-			        "ZIP char(5), " +
-			        "PRIMARY KEY (ID))";
-			this.executeUpdate(conn, createString);
-			System.out.println("Created a table");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not create the table");
-			e.printStackTrace();
-			return;
-		}
-		
-		// Drop the table
-		try {
-		    String dropString = "DROP TABLE " + this.tableName;
-			this.executeUpdate(conn, dropString);
-			System.out.println("Dropped the table");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not drop the table");
-			e.printStackTrace();
-			return;
-		}
+	public String[] getOutput_ingredients() {
+		return output_ingredients;
 	}
 }
