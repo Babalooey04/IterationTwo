@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="mysql-connector-java-5.1.33"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/home/toby/Downloads/School/Fall&apos;14/mysql-connector-java-5.1.32/mysql-connector-java-5.1.32-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/toby/Downloads/School/Fall&apos;14/mysql-connector-java-5.1.32/mysql-connector-java-5.1.32-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/Babalooey04/Documents/workspace/mysql-connector-java-5.1.33/mysql-connector-java-5.1.33-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
