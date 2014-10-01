@@ -9,6 +9,7 @@ public class displayGui extends JFrame {
     private JPanel rightPanel;
     private JPanel bottomrightPanel;
     private JPanel toprightPanel;
+    private JPanel titlePanel;
     private JPanel btnPanel;
     private JScrollPane scrollPane;
     final JPanel listPanel;
@@ -39,6 +40,7 @@ public class displayGui extends JFrame {
         rightPanel = new JPanel();
         bottomrightPanel = new JPanel();
         toprightPanel = new JPanel();
+        titlePanel = new JPanel();
         btnPanel = new JPanel();
         listPanel = new JPanel();
         JTextField field = new JTextField(20);
@@ -82,8 +84,11 @@ public class displayGui extends JFrame {
         bottomrightPanel.setBorder(BorderFactory.createTitledBorder("Recipe Ingredients"));
         bottomrightPanel.setBackground(Color.WHITE);
         bottomrightPanel.setPreferredSize(new Dimension(0, 200));
+        titlePanel.setBackground(Color.WHITE);
         rightPanel.add(bottomrightPanel, BorderLayout.SOUTH);
-        rightPanel.add(toprightPanel, BorderLayout.NORTH);
+        rightPanel.add(toprightPanel, BorderLayout.CENTER);
+        rightPanel.add(titlePanel, BorderLayout.NORTH);
+        titlePanel.setPreferredSize(new Dimension(0,50));
 
         rightPanel.setBackground(Color.WHITE);
 
