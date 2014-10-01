@@ -51,6 +51,7 @@ public class displayGui extends JFrame {
         final JComboBox category = new JComboBox(categoryType);
         category.setSelectedIndex(0);
         JScrollPane categoryListScrollPane = new JScrollPane(category);
+        categoryListScrollPane.setPreferredSize(new Dimension(0,30));
 
         JButton showButton = new JButton("Show");
 
@@ -72,7 +73,6 @@ public class displayGui extends JFrame {
         leftPanel.setPreferredSize(new Dimension(200, 300));
         leftPanel.setBackground(Color.WHITE);
         leftPanel.setLayout(new BorderLayout());
-        leftPanel.add(categoryListScrollPane);
         rightPanel.setLayout(new BorderLayout());
         //rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 170, 0));
         toprightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 300, 200));
@@ -122,8 +122,10 @@ public class displayGui extends JFrame {
         frame2.add(listPanel, BorderLayout.CENTER);
         frame2.setVisible(false);
 
+
         leftPanel.add(btnPanel, BorderLayout.SOUTH);
         leftPanel.add(Recipes_List, BorderLayout.WEST);
+        leftPanel.add(categoryListScrollPane, BorderLayout.NORTH);
         scrollPane = new JScrollPane(tbl);
         //leftPanel.add(scrollPane,BorderLayout.CENTER);
         //rightPanel.add(scrollPane,BorderLayout.CENTER);
