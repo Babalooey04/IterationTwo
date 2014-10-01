@@ -44,7 +44,7 @@ public class DBConnector {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "";
+	private final String password = "Pitsnip1";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -58,7 +58,7 @@ public class DBConnector {
 	/** The name of the table we are testing with */
 	private final String tableName = "recipes_tbl";
 	
-	int MAX = 20;
+	int MAX = 30;
 
 	String[] internalArray = new String[MAX];
 	private String[] output_recipe = new String[MAX];
@@ -158,8 +158,9 @@ public class DBConnector {
 						internalArray[i++] = resultSet.getString("id");
 						internalArray[i++] = resultSet.getString("recipes_name");
 						internalArray[i++] = resultSet.getString("recipes_ingredient");
+						
 						internalArray[i++] = resultSet.getString("recipes_directions");
-			
+						System.out.println(resultSet.getString("recipes_directions"));
 						i ++;
 					}
 				
@@ -187,14 +188,14 @@ public class DBConnector {
         while(internalArray[k] != null){
           	output_recipe[j] = internalArray[k++];
            	output_ingredients[j] = html1 + "270" + html2 + internalArray[k++];
-           	output_description[j++] = html1 +"300"+ html2 + internalArray[k++];
+           	output_description[j] = html1 +"300"+ html2 + internalArray[k++];
            	k+=2;
+           	j++;
         }
 	 }
-    
-	public void delete_FromDB(){
-
-		// Connect to MySQL
+    public void search_DB(String ingredientName){
+    	
+    	// Connect to MySQL
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -207,7 +208,31 @@ public class DBConnector {
 		// Insert into table
 				try {
 				    String createString =
-					        "DELETE FROM recipes_tbl WHERE id=4";
+					        "SELECT id FROM ingredients_tbl WHERE ingredientName = '"+ingredientName+ "'";
+					this.executeUpdate(conn, createString);
+					System.out.println("Found it!");
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Failed to find it ;(");
+					e.printStackTrace();
+					return;
+				}
+    }
+	public void delete_FromDB(int toDelete){
+
+		// Connect to MySQL
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return;
+		}
+		// Delete from table
+				try {
+				    String createString =
+					        "DELETE FROM recipes_tbl WHERE id="+ (toDelete+1);
 					this.executeUpdate(conn, createString);
 					System.out.println("Deleted that old recipe!");
 			    } catch (SQLException e) {
@@ -221,12 +246,32 @@ public class DBConnector {
 	public String[] getOutput_recipe() {
 		return output_recipe;
 	}
-
-	public String[] getOutput_description() {
+	public String[] getOutput_recipe2(int a) {
+		String[] returnArray = new String[1];
+		returnArray[0] = output_recipe[a]; 
+		return returnArray;
+	
+	}
+	public String[] getOutput_description2() {
+		 
 		return output_description;
 	}
-
+	public String[] getOutput_description(int a) {
+		String[] returnArray = new String[1];
+		returnArray[0] = output_description[a]; 
+		return returnArray;
+	}
+	
+	public String getIndividualOutput_description(int a) {
+		return output_description[a];
+	}
+	
 	public String[] getOutput_ingredients() {
 		return output_ingredients;
+	}
+	public String[] getOutput_ingredients2(int a) {
+		String[] returnArray = new String[1];
+		returnArray[0] = output_ingredients[a]; 
+		return returnArray;
 	}
 }
