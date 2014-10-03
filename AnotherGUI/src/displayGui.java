@@ -24,6 +24,7 @@ public class displayGui extends JFrame{
         setTitle("My Recipes");
         setSize(600,600);
         setBackground(Color.gray);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
       //1. Create another frame.
         final JFrame frame2 = new JFrame("Add Recipe");
@@ -86,7 +87,7 @@ public class displayGui extends JFrame{
         scrollPane = new JScrollPane(tbl);
         //leftPanel.add(scrollPane,BorderLayout.CENTER);
 
-		rightPanel.addRecipes(Description_List, ingredients_List);
+
 
     	Recipes_List.addListSelectionListener(new ListSelectionListener(){
 
@@ -102,6 +103,8 @@ public class displayGui extends JFrame{
 		        ingredients_List.setListData(dbObject.getOutput_ingredients2(selectedVar));
 			}
 		});
+
+    	rightPanel.addRecipes(Description_List, ingredients_List);
 
         addButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent event) {
