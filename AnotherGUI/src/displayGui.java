@@ -11,7 +11,7 @@ public class displayGui extends JFrame{
     private JPanel btnPanel;
     private JScrollPane scrollPane;
     private displayRight rightPanel;
-    final JPanel listPanel;
+    private displayFrame2 frame2;
     JTextArea text = new JTextArea(300, 300);
 
     @SuppressWarnings("unchecked")
@@ -26,16 +26,11 @@ public class displayGui extends JFrame{
         setBackground(Color.gray);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-      //1. Create another frame.
-        final JFrame frame2 = new JFrame("Add Recipe");
-        frame2.setPreferredSize(new Dimension(300, 300));
-
         leftPanel = new JPanel();
         rightPanel = new displayRight();
+        frame2 = new displayFrame2();
         btnPanel = new JPanel();
-        listPanel = new JPanel();
-        JTextField field = new JTextField(1000);
-        frame2.add(field, BorderLayout.NORTH);
+
 
         btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -44,20 +39,12 @@ public class displayGui extends JFrame{
         leftPanel.setBackground(Color.WHITE);
         leftPanel.setLayout(new BorderLayout());
 
-        String[] addOptions = {"Tsting", "One", "Two"};
 
         //Buttons
         JButton addButton = new JButton("+");
         JButton delButton = new JButton("-");
-        JButton saveButton = new JButton("SAVE");
 
-        // Labels
-		JLabel listLbl = new JLabel("Add");
-		JLabel recipe_name = new JLabel("Recipe name: ");
-		JLabel recipe_ingredients = new JLabel("Ingredients: ");
-		JLabel recipe_directions = new JLabel("Directions: ");
 
-		JList options = new JList(addOptions);
 		final JList Recipes_List = new JList(dbObject.getOutput_recipe());
 		final JList Description_List = new JList(dbObject.getOutput_description(0));
 		final JList ingredients_List = new JList(dbObject.getOutput_ingredients2(0));
@@ -65,31 +52,19 @@ public class displayGui extends JFrame{
 
 	    Recipes_List.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-
-
 		//for (String ingredient : dbObject.getOutput_description2())
 			//System.out.println(ingredient);
 
-		listPanel.add(listLbl);
-		listPanel.add(options);
-
-        //btnPanel.setPreferredSize(new Dimension(300,40));
+		//btnPanel.setPreferredSize(new Dimension(300,40));
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
 
-        //4. Size the frame.
-        frame2.pack();
-        frame2.add(listPanel, BorderLayout.CENTER);
-        frame2.setVisible(false);
-
-        leftPanel.add(btnPanel, BorderLayout.SOUTH);
+		leftPanel.add(btnPanel, BorderLayout.SOUTH);
         leftPanel.add(Recipes_List, BorderLayout.WEST);
         scrollPane = new JScrollPane(tbl);
         //leftPanel.add(scrollPane,BorderLayout.CENTER);
 
-
-
-    	Recipes_List.addListSelectionListener(new ListSelectionListener(){
+		Recipes_List.addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -109,9 +84,10 @@ public class displayGui extends JFrame{
         addButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent event) {
 
-				frame2.setVisible(!frame2.isVisible());
+				frame2.showFrame();
 				}
 		});
+
         delButton.addActionListener(new ActionListener() {
   			@Override public void actionPerformed(ActionEvent event) {
   				int selectedVar = Recipes_List.getSelectedIndex();
@@ -130,13 +106,6 @@ public class displayGui extends JFrame{
 
         btnPanel.add(addButton);
         btnPanel.add(delButton);
-
-        //frame2 adds
-        frame2.add(recipe_name, BorderLayout.WEST);
-        frame2.add(recipe_ingredients, BorderLayout.WEST);
-        frame2.add(recipe_directions, BorderLayout.WEST);
-        frame2.add(saveButton, BorderLayout.SOUTH);
-
 
     }
 }
