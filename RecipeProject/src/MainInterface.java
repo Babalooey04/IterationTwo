@@ -6,20 +6,28 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.JList;
 import javax.swing.JSplitPane;
+
 import java.awt.Dimension;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.FlowLayout;
+
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JTextField;
@@ -99,6 +107,14 @@ public class MainInterface extends JFrame {
   			}
   		});
 
+	    final displayFrame2 frame_2 = new displayFrame2();
+
+	    button.addActionListener(new ActionListener() {
+  			@Override public void actionPerformed(ActionEvent event) {
+
+  				frame_2.showFrame();
+  			}
+  		});
 	}
 
 }
