@@ -1,0 +1,9 @@
+From mysql prompt 
+
+CREATE DATABASE Recipe;
+
+USE Recipe;
+
+CREATE TABLE recipes_tbl(id INT NOT NULL AUTO_INCREMENT, recipes_name VARCHAR(100) NOT NULL, recipes_ingredient VARCHAR(1000) NOT NULL, recipes_directions VARCHAR(1000) NOT NULL, PRIMARY KEY(id));
+
+Then navigate to the Recipes folder and run the Recipe_Script.sh. Make sure to change the password and user to your username and password that was created when the database was created.
