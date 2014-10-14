@@ -81,6 +81,19 @@ public class MainInterface extends JFrame {
 
 		JButton deleteButton = new JButton("-");
 		panel_2.add(deleteButton);
+		
+		JPanel search_panel = new JPanel();
+		search_panel.setBackground(Color.WHITE);
+		search_panel.setPreferredSize(new Dimension(200, 10));
+		search_panel.setLayout(new BorderLayout(0, 0));
+		
+		JTextField search_text = new JTextField("");
+		JButton search_button = new JButton("Search");
+		
+		search_panel.add(search_text);
+		search_panel.add(search_button);
+		contentPane.add(search_panel, BorderLayout.SOUTH);
+		
 
 		final rightPanel panel_3 = new rightPanel(dbObject.getIndividualOutput_recipe(0), dbObject.getIndividualOutput_ingredients(0), list_1, list_2);
 		contentPane.add(panel_3, BorderLayout.EAST);
@@ -115,6 +128,7 @@ public class MainInterface extends JFrame {
   				frame_2.showFrame();
   			}
   		});
+	    
 	}
 
 }
