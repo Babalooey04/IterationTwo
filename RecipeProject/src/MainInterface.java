@@ -49,8 +49,7 @@ public class MainInterface extends JFrame {
 		final JList list = new JList(dbObject.getOutput_recipe());
 		final JList list_1 = new JList(dbObject.getOutput_description(0));
 		final JList list_2 = new JList(dbObject.getOutput_ingredients2(0));
-		final String[] SortItems = {"Breakfast", "Lunch", "Dinner", "Dessert"};
-
+		
 		setTitle("Recipes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 600);

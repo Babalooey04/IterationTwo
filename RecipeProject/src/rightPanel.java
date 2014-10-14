@@ -24,7 +24,7 @@ public class rightPanel extends JPanel{
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		panel_1 = new JPanel();
-		add(panel_1);
+		
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(BorderFactory.createTitledBorder(new LineBorder(new Color(0,0,0)), description + " Description"));
 		panel_1.setPreferredSize(new Dimension(350, 350));
@@ -36,7 +36,7 @@ public class rightPanel extends JPanel{
 		panel_4.setPreferredSize(new Dimension(300, 200));
 		panel_4.setBorder(BorderFactory.createTitledBorder(new LineBorder(new Color(0,0,0)), ingredients + " Ingredients"));
 		add(panel_4);
-
+		add(panel_1);
 		panel_4.add(list_2);
 
 		JTextField textField = new JTextField();

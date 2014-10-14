@@ -20,6 +20,8 @@ public class displayFrame2 extends JFrame{
 	private JTextArea textArea_1;
 	private JTextArea textArea_2;
 
+	final DBConnector dbObject = new DBConnector();
+	
 	public displayFrame2(){
 		getContentPane().setPreferredSize(new Dimension(300, 300));
 
@@ -61,6 +63,8 @@ public class displayFrame2 extends JFrame{
         saveButton = new JButton("SAVE");
         saveButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		
+        		dbObject.insert_IntoDB(textArea.getText(), textArea_1.getText(), textArea_2.getText());
         	}
         });
         getContentPane().add(saveButton);
