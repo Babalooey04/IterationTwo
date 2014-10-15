@@ -3,9 +3,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.*;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -21,7 +23,7 @@ public class displayFrame2 extends JFrame{
 	private JTextArea textArea_2;
 
 	final DBConnector dbObject = new DBConnector();
-	
+
 	public displayFrame2(){
 		getContentPane().setPreferredSize(new Dimension(300, 300));
 
@@ -33,16 +35,16 @@ public class displayFrame2 extends JFrame{
 		String[] addOptions = {"Tsting", "One", "Two"};
 		getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
         getContentPane().add(recipe_name);
-        
+
         textArea = new JTextArea();
         textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         getContentPane().add(textArea);
-        
+
         lblIngredients = new JLabel("Ingredients:");
         getContentPane().add(lblIngredients);
-        
+
         textArea_1 = new JTextArea();
         textArea_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         textArea_1.setWrapStyleWord(true);
@@ -50,20 +52,20 @@ public class displayFrame2 extends JFrame{
         getContentPane().add(textArea_1);
         recipe_directions = new JLabel("Directions: ");
         getContentPane().add(recipe_directions);
-        
+
         textArea_2 = new JTextArea();
         textArea_2.setWrapStyleWord(true);
         textArea_2.setLineWrap(true);
         textArea_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         getContentPane().add(textArea_2);
-        
+
         label = new JLabel("");
         label.setBorder(null);
         getContentPane().add(label);
         saveButton = new JButton("SAVE");
         saveButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		
+
         		dbObject.insert_IntoDB(textArea.getText(), textArea_1.getText(), textArea_2.getText());
         	}
         });
@@ -76,5 +78,15 @@ public class displayFrame2 extends JFrame{
 
 	public void showFrame(){
 		setVisible(!isVisible());
+	}
+
+	public void changeRecipe(String name, String description, String ingredients) {
+
+		textArea.setText(name);
+		description = description.replace("<html><body style='width: 250px'>", "");
+		ingredients = ingredients.replace("<html><body style='width: 220px'>", "");
+		textArea_1.setText(ingredients);
+		textArea_2.setText(description);
+
 	}
 }

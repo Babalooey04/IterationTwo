@@ -79,26 +79,28 @@ public class MainInterface extends JFrame {
 
 		JButton button = new JButton("+");
 		panel_2.add(button);
-		
+
 		JButton deleteButton = new JButton("-");
 		panel_2.add(deleteButton);
-				
+
 					    deleteButton.addActionListener(new ActionListener() {
 				  			@Override public void actionPerformed(ActionEvent event) {
 				  				int selectedVar = list.getSelectedIndex();
-				
+
 				  				dbObject.delete_FromDB(selectedVar);
 				  				Driver driver_2 = new Driver();
 				  				dispose();
-				
+
 				  			}
 				  		});
-		
+
 		JButton editButton = new JButton("Edit");
-		
+
 		final displayFrame2 frame_2 = new displayFrame2();
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				int selectedVar = list.getSelectedIndex();
+				frame_2.changeRecipe(dbObject.getIndividualOutput_recipe(selectedVar), dbObject.getOutput_description(selectedVar)[0], dbObject.getOutput_ingredients2(selectedVar)[0]);
 				frame_2.showFrame();
 			}
 		});
