@@ -190,7 +190,7 @@ public class DBConnector {
            	j++;
         }
 	 }
-    public void search_DB(String ingredientName){
+    public String[] search_DB(String ingredientName){
     	
     	int i = 0;
     	// Connect to MySQL
@@ -204,26 +204,27 @@ public class DBConnector {
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not connect to the database");
 			e.printStackTrace();
-			return;
+
 		}
 		// Search DB
-				try {
-					stmt = conn.createStatement();
-					resultSet = stmt.executeQuery("SELECT id FROM ingredients_tbl WHERE ingredientName = '"+ingredientName+ "'");
-					while(resultSet.next()){
-						internalArray[i++] = resultSet.getString("id");
-						internalArray[i++] = resultSet.getString("recipes_name");
-						internalArray[i++] = resultSet.getString("recipes_ingredient");
-						internalArray[i++] = resultSet.getString("recipes_directions");
-						i ++;
-					}
-					System.out.println("Found it!");
-			    } catch (SQLException e) {
-					System.out.println("ERROR: Failed to find it ;(");
-					e.printStackTrace();
-					return;
-				}
-				Recipes();
+		try {
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery("SELECT id FROM ingredients_tbl WHERE ingredientName = '"+ingredientName+ "'");
+			while(resultSet.next()){
+				internalArray[i++] = resultSet.getString("id");
+				internalArray[i++] = resultSet.getString("recipes_name");
+				internalArray[i++] = resultSet.getString("recipes_ingredient");
+				internalArray[i++] = resultSet.getString("recipes_directions");
+				i ++;
+			}
+			System.out.println("Found it!");
+			return internalArray;
+			
+		} catch (SQLException e) {
+			System.out.println("ERROR: Failed to find it ;(");
+			e.printStackTrace();
+		}
+		Recipes();
     }
 	public void delete_FromDB(int toDelete){
 
@@ -257,13 +258,12 @@ public class DBConnector {
 	}
 	public String[] getOutput_recipe2(int a) {
 		String[] returnArray = new String[1];
-		returnArray[0] = output_recipe[a]; 
+		returnArray[0] = output_recipe[a];
 		return returnArray;
 	
 	}
 	public String getIndividualOutput_recipe(int a) {
 		return output_recipe[a]; 
-	
 	}
 
 	public String[] getOutput_description(int a) {
@@ -289,4 +289,5 @@ public class DBConnector {
 		return returnString;
 	
 	}
+	
 }

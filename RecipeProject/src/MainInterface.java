@@ -61,7 +61,7 @@ public class MainInterface extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(new Color(0,0,0)), "Recipes"));
 		panel.setPreferredSize(new Dimension(200, 10));
@@ -128,6 +128,29 @@ public class MainInterface extends JFrame {
   				frame_2.showFrame();
   			}
   		});
+	    
+		JPanel search_panel = new JPanel();
+		search_panel.setBackground(Color.WHITE);
+		search_panel.setSize(new Dimension(400, 20));
+		search_panel.setLayout(new GridLayout(0, 2));
+		final JTextField search_text = new JTextField("");
+		JButton search_button = new JButton("Search");
+		
+		search_button.addActionListener(new ActionListener() {
+			String in = search_text.getText();
+			public void actionPerformed(ActionEvent event) {
+				
+				String[] result = dbObject.search_DB(in);
+				list = JList(result);
+				panel.add(list);				
+			}
+		});
+		
+ 		search_panel.add(search_text);
+		search_panel.add(search_button);
+		add(search_panel);
+		
+		
 	}
 
 }

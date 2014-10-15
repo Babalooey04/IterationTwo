@@ -40,15 +40,6 @@ public class rightPanel extends JPanel{
 		add(panel_1);
 		panel_4.add(list_2);
 
-		JPanel search_panel = new JPanel();
-		search_panel.setBackground(Color.WHITE);
-		search_panel.setSize(new Dimension(400, 20));
-		search_panel.setLayout(new GridLayout(0, 2));
-		JTextField search_text = new JTextField("");
-		JButton search_button = new JButton("Search");
-		search_panel.add(search_text);
-		search_panel.add(search_button);
-		add(search_panel);
 	}
 
 	public void changeRecipe(String description_Name, Object[] description, String ingredients_Name, Object[] ingredients) {
